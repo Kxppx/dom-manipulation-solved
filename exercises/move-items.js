@@ -2,7 +2,7 @@
  * SORTING NODES WITHIN A CONTAINER
  * Please, make sure to read the following files in the exercises-info folder before you start
  * * 01 SelectNodes.md
-*/
+ */
 
 /**
  * @task
@@ -12,8 +12,7 @@
  */
 
 // Your code goes here...
-
-
+const allItems = document.querySelectorAll(".item");
 
 /**
  * @task
@@ -23,8 +22,7 @@
  * */
 
 // Your code goes here
-
-
+const main = document.getElementById("main");
 
 /**
  * @task
@@ -34,8 +32,7 @@
  */
 
 // Your code goes here
-
-
+const favs = document.getElementById("favs");
 
 /**
  * @task
@@ -47,8 +44,12 @@
  */
 
 // Your code goes here
-
-
+const updateCollections = (id, direction) => {
+  const item = document.getElementById(id);
+  const parentId = item.parentElement.id;
+  document.getElementById(parentId).removeChild(item);
+  document.getElementById(direction).appendChild(item);
+};
 
 /**
  * @task
@@ -65,5 +66,24 @@
  */
 
 // Your code goes here...
-
-
+allItems.forEach((item) => {
+  if (item.parentElement === favs) {
+    const icon = item.children[0];
+    icon.classList.remove("fa-heart-circle-plus");
+    icon.classList.add("fa-heart-crack");
+  }
+  item.addEventListener("click", () => {
+    const id = item.id;
+    const currentParent = item.parentElement.id;
+    const direction = currentParent === "main" ? "favs" : "main";
+    const icon = item.children[0].classList;
+    if (direction === "favs") {
+      icon.remove("fa-heart-circle-plus");
+      icon.add("fa-heart-crack");
+    } else {
+      icon.remove("fa-heart-crack");
+      icon.add("fa-heart-circle-plus");
+    }
+    updateCollections(id, direction);
+  });
+});
